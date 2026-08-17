@@ -1,17 +1,35 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Home from '../telas/home';
+import HomeScreen from '../telas/home';
 import Login from '../telas/login';
-import cadUsuario from '../telas/cadUsuario';
-import recSenha from '../telas/recSenha';
+import CadUsuario from '../telas/cadUsuario';
+import RecSenha from '../telas/recSenha';
 
 const Stack = createNativeStackNavigator();
 
-function RootStack() {
+export default function RootStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator initialRouteName="login" >
+      <Stack.Screen
+        name="login"
+        component={Login}
+        options={{ title: 'Login' }}
+      />
+      <Stack.Screen
+        name="home"
+        component={HomeScreen}
+        options={{ title: 'Home' }}
+      />
+      <Stack.Screen
+        name="cadUsuario"
+        component={CadUsuario}
+        options={{ title: 'Cadastro de Usuario' }}
+      />
+      <Stack.Screen
+        name="recSenha"
+        component={RecSenha}
+        options={{ title: 'Recuperação de  Senha' }}
+      />
     </Stack.Navigator>
   );
 }
-
