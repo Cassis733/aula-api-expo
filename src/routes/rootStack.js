@@ -1,24 +1,38 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+
 import HomeScreen from '../telas/home';
 import Login from '../telas/login';
 import CadUsuario from '../telas/cadUsuario';
 import RecSenha from '../telas/recSenha';
+import MyTabs from './myTabs';
+import { Background } from '@react-navigation/elements';
 
 const Stack = createNativeStackNavigator();
 
 export default function RootStack() {
   return (
-    <Stack.Navigator initialRouteName="login" >
+    <Stack.Navigator 
+      initialRouteName="login"
+      screenOptions={
+        {
+          headerStyle:{
+          backgroundColor: 'tomato'
+         },
+        }
+      }
+    >
       <Stack.Screen
         name="login"
         component={Login}
-        options={{ title: 'Login' }}
+        options={{ title: 'Página de Login' }}
       />
       <Stack.Screen
         name="home"
-        component={HomeScreen}
-        options={{ title: 'Home' }}
+        component={MyTabs}
+        options={{ 
+          title: 'Home', 
+          headerShown: false }}
       />
       <Stack.Screen
         name="cadUsuario"
@@ -28,7 +42,16 @@ export default function RootStack() {
       <Stack.Screen
         name="recSenha"
         component={RecSenha}
-        options={{ title: 'Recuperação de  Senha' }}
+        options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
       />
     </Stack.Navigator>
   );
