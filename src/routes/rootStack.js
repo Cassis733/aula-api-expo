@@ -6,7 +6,7 @@ import Login from '../telas/login';
 import CadUsuario from '../telas/cadUsuario';
 import RecSenha from '../telas/recSenha';
 import MyTabs from './myTabs';
-import { Background } from '@react-navigation/elements';
+
 
 const Stack = createNativeStackNavigator();
 
