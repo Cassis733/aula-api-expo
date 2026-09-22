@@ -1,15 +1,3 @@
-
-
-/*import { View, Text } from "react-native";
-
-export default function Login(){
-   // return (
-        <View>
-            <Text>CadUsuario</Text>
-        </View>
-    );
-}
-*/
 import React, { useState } from 'react';
 import { 
   StyleSheet, 
@@ -18,13 +6,13 @@ import {
   TextInput, 
   TouchableOpacity, 
   ScrollView, 
-  SafeAreaView 
+  SafeAreaView,
+  Image 
 } from 'react-native';
 
 export default function Login() {
-  // Estados para controlar qual botão está selecionado
   const [tipoUsuario, setTipoUsuario] = useState('cliente'); // 'cliente' ou 'prestador'
-  const [aba, setAba] = useState('criar'); // 'entrar' ou 'criar'
+  const [aba, setAba] = useState('entrar'); // 'entrar' ou 'criar'
 
   return (
     <SafeAreaView style={styles.container}>
@@ -32,12 +20,53 @@ export default function Login() {
         
         {/* --- CABEÇALHO --- */}
         <View style={styles.header}>
+          <Image 
+            source={{ uri: 'https://i.imgur.com/vH3yq9X.png' }} // Substitua pela imagem do seu logo/carro se preferir
+            style={styles.headerLogoImage} 
+            resizeMode="contain"
+          />
           <Text style={styles.logoTitle}>
-            🛡️ SOS <Text style={styles.logoSub}>Car</Text>
+            SOS <Text style={styles.logoSub}>Car</Text>
           </Text>
         </View>
 
-        {/* --- CARD PRINCIPAL --- */}
+        {/* --- BANNER DE CAPA --- */}
+        <View style={styles.bannerContainer}>
+          <Image 
+            source={{ uri: 'https://i.imgur.com/vH3yq9X.png' }} // URL da imagem principal do carro SOSCAR
+            style={styles.bannerImage}
+            resizeMode="contain"
+          />
+        </View>
+
+        {/* --- SEÇÃO INFORMATIVA --- */}
+        <View style={styles.infoSection}>
+          <Text style={styles.mainTitle}>Precisa de socorro no veículo?</Text>
+          <Text style={styles.subTitle}>
+            Peça ajuda ou atenda quem precisa — rápido, simples e com acompanhamento em tempo real.
+          </Text>
+
+          <View style={styles.featureList}>
+            <View style={styles.featureItem}>
+              <View style={styles.iconBox}><Text style={styles.iconText}>⏱️</Text></View>
+              <Text style={styles.featureText}>Atendimento rápido, perto de você</Text>
+            </View>
+
+            <View style={styles.featureItem}>
+              <View style={styles.iconBox}><Text style={styles.iconText}>🛡️</Text></View>
+              <Text style={styles.featureText}>
+                Prestadores por categoria: mecânico, borracheiro, auto elétrica e guincho
+              </Text>
+            </View>
+
+            <View style={styles.featureItem}>
+              <View style={styles.iconBox}><Text style={styles.iconText}>⭐</Text></View>
+              <Text style={styles.featureText}>Acompanhe o status e avalie o atendimento</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* --- CARD PRINCIPAL DE LOGIN / CADASTRO --- */}
         <View style={styles.card}>
           
           {/* Alternador: Cliente / Prestador */}
@@ -82,28 +111,42 @@ export default function Login() {
             </TouchableOpacity>
           </View>
 
-          {/* --- FORMULÁRIO DE CADASTRO --- */}
+          {/* --- FORMULÁRIO --- */}
           <View style={styles.form}>
-            <Text style={styles.label}>Nome completo</Text>
-            <TextInput style={styles.input} />
+            {aba === 'criar' && (
+              <>
+                <Text style={styles.label}>Nome completo</Text>
+                <TextInput style={styles.input} />
+              </>
+            )}
 
             <Text style={styles.label}>Email</Text>
-            <TextInput style={styles.input} keyboardType="email-address" />
+            <TextInput 
+              style={styles.input} 
+              keyboardType="email-address" 
+              autoCapitalize="none"
+            />
 
             <Text style={styles.label}>Senha</Text>
             <TextInput style={styles.input} secureTextEntry={true} />
 
-            <Text style={styles.label}>CPF</Text>
-            <TextInput style={styles.input} placeholder="000.000.000-0" keyboardType="numeric" />
+            {aba === 'criar' && (
+              <>
+                <Text style={styles.label}>CPF</Text>
+                <TextInput style={styles.input} placeholder="000.000.000-0" keyboardType="numeric" />
 
-            <Text style={styles.label}>
-              Telefone <Text style={styles.labelOpcional}>(opcional)</Text>
-            </Text>
-            <TextInput style={styles.input} placeholder="(00) 00000-0000" keyboardType="phone-pad" />
+                <Text style={styles.label}>
+                  Telefone <Text style={styles.labelOpcional}>(opcional)</Text>
+                </Text>
+                <TextInput style={styles.input} placeholder="(00) 00000-0000" keyboardType="phone-pad" />
+              </>
+            )}
 
             {/* Botão Principal */}
             <TouchableOpacity style={styles.btnSubmit}>
-              <Text style={styles.btnSubmitText}>Criar conta</Text>
+              <Text style={styles.btnSubmitText}>
+                {aba === 'entrar' ? 'Entrar' : 'Criar conta'}
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -126,64 +169,129 @@ export default function Login() {
   );
 }
 
-// --- ESTILOS (CSS DO REACT NATIVE) ---
+// --- ESTILOS COMPATÍVEIS COM A NOVA INTERFACE ---
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F8',
+    backgroundColor: '#FAF9F5', // Tom suave de fundo claro/amarelado
   },
   scrollContent: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
     alignItems: 'center',
   },
   header: {
     width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20,
+    marginTop: 15,
+    marginBottom: 10,
+    gap: 8,
+  },
+  headerLogoImage: {
+    width: 35,
+    height: 35,
   },
   logoTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#000',
   },
   logoSub: {
-    color: '#5C6BC0',
+    color: '#F5B800', // Dourado do SOSCar
+  },
+  bannerContainer: {
+    width: '100%',
+    height: 180,
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bannerImage: {
+    width: '100%',
+    height: '100%',
+  },
+  infoSection: {
+    width: '100%',
+    marginVertical: 15,
+  },
+  mainTitle: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#111',
+    marginBottom: 8,
+    lineHeight: 28,
+  },
+  subTitle: {
+    fontSize: 15,
+    color: '#666',
+    lineHeight: 22,
+    marginBottom: 20,
+  },
+  featureList: {
+    gap: 12,
+  },
+  featureItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  iconBox: {
+    width: 38,
+    height: 38,
+    backgroundColor: '#FEF3D6',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconText: {
+    fontSize: 18,
+  },
+  featureText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#444',
+    fontWeight: '500',
   },
   card: {
     backgroundColor: '#FFF',
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 20,
     width: '100%',
-    // Sombra para iOS e Android
-    elevation: 4,
+    marginTop: 15,
+    borderWidth: 1,
+    borderColor: '#EFEFEF',
+    // Sombras
+    elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 8,
   },
   toggleContainer: {
     flexDirection: 'row',
-    backgroundColor: '#F0F0F5',
+    backgroundColor: '#F5F5F7',
     borderRadius: 25,
     padding: 4,
     marginBottom: 12,
   },
   toggleBtn: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderRadius: 20,
     alignItems: 'center',
   },
   btnAtivo: {
-    backgroundColor: '#5C73F2',
+    backgroundColor: '#F5B800', // Amarelo/Dourado principal
   },
   toggleText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#666',
+    color: '#555',
   },
   textAtivo: {
-    color: '#FFF',
+    color: '#111',
   },
   form: {
     marginTop: 10,
@@ -191,37 +299,37 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#444',
+    color: '#333',
     marginBottom: 6,
-    marginTop: 10,
+    marginTop: 12,
   },
   labelOpcional: {
     fontWeight: 'normal',
     color: '#888',
   },
   input: {
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#F9F9FB',
     borderWidth: 1,
-    borderColor: '#E2E8F0',
-    borderRadius: 10,
+    borderColor: '#E5E7EB',
+    borderRadius: 12,
     paddingHorizontal: 14,
-    paddingVertical: 10,
-    fontSize: 14,
+    paddingVertical: 12,
+    fontSize: 15,
   },
   btnSubmit: {
-    backgroundColor: '#4E65FF',
+    backgroundColor: '#F5B800',
     paddingVertical: 14,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 24,
   },
   btnSubmitText: {
-    color: '#FFF',
+    color: '#111',
     fontSize: 16,
     fontWeight: 'bold',
   },
   footer: {
-    marginTop: 30,
+    marginTop: 35,
     alignItems: 'center',
     gap: 10,
   },
@@ -230,12 +338,12 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   footerLink: {
-    color: '#666',
+    color: '#777',
     fontSize: 12,
   },
   copyright: {
-    color: '#999',
+    color: '#AAA',
     fontSize: 11,
     marginTop: 5,
   },
-});    
+});
